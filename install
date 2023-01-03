@@ -1,0 +1,124 @@
+HOME=/data/data/com.termux/files/home
+SLACKWARE=$HOME/slackware
+PKGTMP=$SLACKWARE/tmp/pkg
+SETUP=$SLACKWARE/tmp/setup
+PKGURI=http://mirrors.slackware.bg/slackwarearm/slackwarearm-current/slackware/
+
+CATA="aaa_base
+aaa_elflibs
+aaa_terminfo
+acl
+attr
+bash
+tar
+bin
+btrfs-progs
+bzip2
+coreutils
+dbus
+dcron
+devs
+dialog
+e2fsprogs
+ed
+etc
+file
+findutils
+hostname
+hwdata
+lbzip2
+less
+gawk
+gettext
+getty-ps
+glibc-solibs
+glibc-zoneinfo
+gptfdisk
+grep
+gzip
+jfsutils
+inotify-tools
+kmod
+lrzip
+lzip
+lzlib
+pkgtools
+procps-ng
+reiserfsprogs
+shadow
+sed
+sysklogd
+usbutils
+util-linux
+which
+xfsprogs
+xz"
+
+CATAP="groff
+aman-db
+man-pages
+nano
+slackpkg"
+
+CATD="perl
+python
+python-pip
+python-setuptools"
+
+CATN="openssl
+ca-certificates
+gnupg
+lftp
+libmnl
+network-scripts
+nfs-utils
+ntp
+iputils
+net-tools
+iproute2
+openssh
+rpcbind
+libtirpc
+rsync
+telnet
+traceroute
+wget
+wpa_supplicant
+wireless-tools"
+
+CATL="lzo
+libnl3
+libidn
+libunistring
+mpfr
+ncurses
+pcre"
+
+touch $SLACKWARE/tmp/setup.mini
+    echo "Mengunduh paket minimal:"
+    sleep 1
+    PKG_MIN="a ap d n l"
+    for PKG_CAT in $PKG_MIN ; do
+        if [ $PKG_CAT = "a" ]
+        then
+            PKGDL=$CATA
+        elif [ $PKG_CAT = "ap" ]
+        then
+            PKGDL=$CATAP
+        elif [ $PKG_CAT = "d" ]
+        then
+            PKGDL=$CATD
+        elif [ $PKG_CAT = "n" ]
+        then
+            PKGDL=$CATN
+        else
+            PKGDL=$CATL
+        fi
+        for PKG_TODL in $PKGDL ; do
+            wget -c -t 0 -T 10 -w 5 -P $PKGTMP/ -q --show-progress -r -np -nd -A "$PKG_TODL-*.txz" $PKGURI/$PKG_CAT/
+        done
+    done
+    echo "OK.\n"
+    echo "Memasang Slackware minimal ..."
+
+
